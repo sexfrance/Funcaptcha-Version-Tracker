@@ -1,0 +1,36 @@
+name: Update Arkose API
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run tracker
+        run: |
+          # If this is run from the repo root, cd into api-tracker
+          # If api-tracker is the repo root, this will just fail and continue
+          [ -d api-tracker ] && cd api-tracker || true
+          node tracker.js
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # Try adding from current dir or subfolder
+          git add versions.json data/ || git add api-tracker/versions.json api-tracker/data/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update Arkose API" && git push)
