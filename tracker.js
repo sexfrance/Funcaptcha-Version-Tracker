@@ -37,6 +37,8 @@ async function processService(name, url, versionsData) {
         const content = await fetchApi(url);
         const versionMatch = content.match(/\/api\.js["'`],\s*\w+\s*=\s*["'`](\d+\.\d+\.\d+)["'`]/);
         const buildIdMatch = content.match(/GAME_LIMIT_DEFAULT["'`],\s*\w+\s*=\s*["'`]([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})["'`]/i);
+        // Enforcement hash is the 32-char hex value assigned before "script" and "v2/api.js"
+        const enforcementMatch = content.match(/["'`]([0-9a-f]{32})["'`],\s*\w+\s*=\s*["'`]script["'`],\s*\w+\s*=\s*["'`]v2\/api\.js["'`]/i);
 
         if (!versionMatch) {
             console.error(`❌ Version not found for ${name}`);
@@ -45,6 +47,7 @@ async function processService(name, url, versionsData) {
 
         const version = versionMatch[1];
         const buildId = buildIdMatch ? buildIdMatch[1] : "unknown";
+        const enforcementHash = enforcementMatch ? enforcementMatch[1] : "unknown";
 
         if (!versionsData[name]) {
             versionsData[name] = { latest: null, history: [] };
@@ -52,19 +55,21 @@ async function processService(name, url, versionsData) {
 
         const serviceData = versionsData[name];
 
-        if (serviceData.latest === version && serviceData.latestBuildId === buildId) {
-            console.log(`✅ ${name} is up to date (${version} | ${buildId})`);
+        if (serviceData.latest === version && serviceData.latestBuildId === buildId && serviceData.latestEnforcementHash === enforcementHash) {
+            console.log(`✅ ${name} is up to date (${version} | ${buildId} | ${enforcementHash})`);
             return;
         }
 
-        console.log(`🚀 Update for ${name}: ${serviceData.latest || 'none'} -> ${version} (build: ${buildId})`);
+        console.log(`🚀 Update for ${name}: ${serviceData.latest || 'none'} -> ${version} (build: ${buildId}, enforcement: ${enforcementHash})`);
 
         const timestamp = new Date().toISOString();
         serviceData.latest = version;
         serviceData.latestBuildId = buildId;
+        serviceData.latestEnforcementHash = enforcementHash;
         serviceData.history.unshift({
             version,
             buildId,
+            enforcementHash,
             timestamp,
             url
         });
@@ -96,9 +101,9 @@ async function run() {
 
     // Generate README table
     const readmePath = path.join(__dirname, "README.md");
-    let table = "| Service | Version | Build ID |\n| --- | --- | --- |\n";
+    let table = "| Service | Version | Build ID | Enforcement Hash |\n| --- | --- | --- | --- |\n";
     for (const [name, data] of Object.entries(versionsData)) {
-        table += `| ${name} | ${data.latest || "?"} | ${data.latestBuildId || "?"} |\n`;
+        table += `| ${name} | ${data.latest || "?"} | ${data.latestBuildId || "?"} | ${data.latestEnforcementHash || "?"} |\n`;
     }
 
     const readme = `# Arkose Labs API Tracker
@@ -110,7 +115,7 @@ Automated tracker for Arkose Labs \`api.js\` (used in Roblox, X, Uber, etc.).
 ${table}
 ## How it works
 - **Schedule:** Runs every 30 minutes via GitHub Actions.
-- **Tracking:** Extracts the internal semantic version and build ID from the JS file.
+- **Tracking:** Extracts the internal semantic version, build ID, and enforcement hash from the JS file.
 - **Persistence:** Updates \`versions.json\` and saves the updated script to the \`data/\` folder.
 
 ## Files
