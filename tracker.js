@@ -36,31 +36,35 @@ async function processService(name, url, versionsData) {
     try {
         const content = await fetchApi(url);
         const versionMatch = content.match(/\/api\.js["'`],\s*\w+\s*=\s*["'`](\d+\.\d+\.\d+)["'`]/);
-        
+        const buildIdMatch = content.match(/GAME_LIMIT_DEFAULT["'`],\s*\w+\s*=\s*["'`]([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})["'`]/i);
+
         if (!versionMatch) {
             console.error(`❌ Version not found for ${name}`);
             return;
         }
-        
+
         const version = versionMatch[1];
-        
+        const buildId = buildIdMatch ? buildIdMatch[1] : "unknown";
+
         if (!versionsData[name]) {
             versionsData[name] = { latest: null, history: [] };
         }
-        
+
         const serviceData = versionsData[name];
-        
-        if (serviceData.latest === version) {
-            console.log(`✅ ${name} is up to date (${version})`);
+
+        if (serviceData.latest === version && serviceData.latestBuildId === buildId) {
+            console.log(`✅ ${name} is up to date (${version} | ${buildId})`);
             return;
         }
 
-        console.log(`🚀 Update for ${name}: ${serviceData.latest || 'none'} -> ${version}`);
-        
+        console.log(`🚀 Update for ${name}: ${serviceData.latest || 'none'} -> ${version} (build: ${buildId})`);
+
         const timestamp = new Date().toISOString();
         serviceData.latest = version;
+        serviceData.latestBuildId = buildId;
         serviceData.history.unshift({
             version,
+            buildId,
             timestamp,
             url
         });
@@ -89,6 +93,36 @@ async function run() {
     }
 
     fs.writeFileSync(VERSIONS_FILE, JSON.stringify(versionsData, null, 2));
+
+    // Generate README table
+    const readmePath = path.join(__dirname, "README.md");
+    let table = "| Service | Version | Build ID |\n| --- | --- | --- |\n";
+    for (const [name, data] of Object.entries(versionsData)) {
+        table += `| ${name} | ${data.latest || "?"} | ${data.latestBuildId || "?"} |\n`;
+    }
+
+    const readme = `# Arkose Labs API Tracker
+
+Automated tracker for Arkose Labs \`api.js\` (used in Roblox, X, Uber, etc.).
+
+## Current Versions
+
+${table}
+## How it works
+- **Schedule:** Runs every 30 minutes via GitHub Actions.
+- **Tracking:** Extracts the internal semantic version and build ID from the JS file.
+- **Persistence:** Updates \`versions.json\` and saves the updated script to the \`data/\` folder.
+
+## Files
+- \`versions.json\`: JSON database of all detected versions and timestamps.
+- \`data/latest.js\`: The most recently fetched \`api.js\`.
+- \`data/api_X_X_X.js\`: Versioned archive of the SDK.
+
+---
+*Automatically updated by [GitHub Actions](.github/workflows/update-api.yml)*
+`;
+    fs.writeFileSync(readmePath, readme);
+
     console.log("\n✨ Done tracking all services.");
 }
 
