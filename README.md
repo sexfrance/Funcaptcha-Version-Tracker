@@ -25,3 +25,5 @@ Automated tracker for Arkose Labs `api.js` (used in Roblox, X, Uber, etc.).
 
 ---
 *Automatically updated by [GitHub Actions](.github/workflows/update-api.yml)*
+
+Telegram contact: [@nareretialt](https://t.me/nareretialt)
