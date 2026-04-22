@@ -12,6 +12,7 @@ Automated tracker for Arkose Labs `api.js` (used in Roblox, X, Uber, etc.).
 | uber_login | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
 | snapchat_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
 | x_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
+| roblox_join | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
 
 ## How it works
 - **Schedule:** Runs every 30 minutes via GitHub Actions.
