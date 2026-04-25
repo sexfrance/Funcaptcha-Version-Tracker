@@ -192,5 +192,19 @@
     ],
     "latestBuildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
     "latestEnforcementHash": "201af2db450fecb8242d98ec4dac983a"
+  },
+  "roblox_recovery": {
+    "latest": "4.0.16",
+    "history": [
+      {
+        "version": "4.0.16",
+        "buildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
+        "enforcementHash": "201af2db450fecb8242d98ec4dac983a",
+        "timestamp": "2026-04-25T19:23:34.627Z",
+        "url": "https://arkoselabs.roblox.com/v2/476068BF-9607-4799-B53D-966BE98E2B81/api.js"
+      }
+    ],
+    "latestBuildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
+    "latestEnforcementHash": "201af2db450fecb8242d98ec4dac983a"
   }
 }
