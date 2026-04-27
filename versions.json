@@ -206,5 +206,19 @@
     ],
     "latestBuildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
     "latestEnforcementHash": "201af2db450fecb8242d98ec4dac983a"
+  },
+  "adobe_register": {
+    "latest": "4.0.16",
+    "history": [
+      {
+        "version": "4.0.16",
+        "buildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
+        "enforcementHash": "201af2db450fecb8242d98ec4dac983a",
+        "timestamp": "2026-04-27T23:44:59.664Z",
+        "url": "https://arks-client.adobe.com/v2/436DD567-5435-4B14-89A6-2F1188E11334/api.js"
+      }
+    ],
+    "latestBuildId": "09493a0d-3295-4bae-879b-6c81044a46a1",
+    "latestEnforcementHash": "201af2db450fecb8242d98ec4dac983a"
   }
 }
