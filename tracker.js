@@ -10,7 +10,8 @@ const SERVICES = {
     "match_login": "https://client-api.arkoselabs.com/v2/85800716-F435-4981-864C-8B90602D10F7/api.js",
     "uber_login": "https://ak04a6qc.uber.com/v2/30000F36-CADF-490C-929A-C6A7DD8B33C4/api.js",
     "snapchat_register": "https://snap-api.arkoselabs.com/v2/EA4B65CB-594A-438E-B4B5-D0DBA28C9334/api.js",
-    "x_register": "https://client-api.arkoselabs.com/v2/2CB16598-CB82-4CF7-B332-5990DB66F3AB/api.js"
+    "x_register": "https://client-api.arkoselabs.com/v2/2CB16598-CB82-4CF7-B332-5990DB66F3AB/api.js",
+    "adobe_register": "https://arks-client.adobe.com/v2/436DD567-5435-4B14-89A6-2F1188E11334/api.js"
 };
 
 const VERSIONS_FILE = path.join(__dirname, "versions.json");
