@@ -6,15 +6,15 @@ Automated tracker for Arkose Labs `api.js` (used in Roblox, X, Uber, etc.).
 
 | Service | Version | Build ID | Enforcement Hash |
 | --- | --- | --- | --- |
-| roblox_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| roblox_login | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| match_login | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| uber_login | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| snapchat_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| x_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| roblox_join | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| roblox_recovery | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
-| adobe_register | 4.0.16 | 09493a0d-3295-4bae-879b-6c81044a46a1 | 201af2db450fecb8242d98ec4dac983a |
+| roblox_register | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| roblox_login | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| match_login | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| uber_login | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| snapchat_register | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| x_register | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| roblox_join | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| roblox_recovery | 4.0.16 | 4ac8440d-c69b-4930-aa81-b805f45bb5d6 | d9d8ed97fd0f45a56f664628052bea47 |
+| adobe_register | 4.2.0 | 01063517-02a3-4241-90e8-57bcfa6eb344 | 24bcfbb16c8559cbe6d75aad3cf33f0a |
 
 ## How it works
 - **Schedule:** Runs every 30 minutes via GitHub Actions.
