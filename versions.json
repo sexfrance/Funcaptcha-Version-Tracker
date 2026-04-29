@@ -88,8 +88,15 @@
     "latestEnforcementHash": "2893ced7f21970c257e618618f41324f"
   },
   "match_login": {
-    "latest": "4.0.16",
+    "latest": "4.0.17",
     "history": [
+      {
+        "version": "4.0.17",
+        "buildId": "6ba988b9-6187-4fcb-9c3d-c8bb759414d4",
+        "enforcementHash": "2893ced7f21970c257e618618f41324f",
+        "timestamp": "2026-04-29T02:14:21.636Z",
+        "url": "https://client-api.arkoselabs.com/v2/85800716-F435-4981-864C-8B90602D10F7/api.js"
+      },
       {
         "version": "4.0.16",
         "buildId": "4ac8440d-c69b-4930-aa81-b805f45bb5d6",
@@ -121,8 +128,8 @@
         "url": "https://client-api.arkoselabs.com/v2/85800716-F435-4981-864C-8B90602D10F7/api.js"
       }
     ],
-    "latestBuildId": "4ac8440d-c69b-4930-aa81-b805f45bb5d6",
-    "latestEnforcementHash": "d9d8ed97fd0f45a56f664628052bea47"
+    "latestBuildId": "6ba988b9-6187-4fcb-9c3d-c8bb759414d4",
+    "latestEnforcementHash": "2893ced7f21970c257e618618f41324f"
   },
   "uber_login": {
     "latest": "4.0.17",
@@ -213,8 +220,15 @@
     "latestEnforcementHash": "2893ced7f21970c257e618618f41324f"
   },
   "x_register": {
-    "latest": "4.0.16",
+    "latest": "4.0.17",
     "history": [
+      {
+        "version": "4.0.17",
+        "buildId": "6ba988b9-6187-4fcb-9c3d-c8bb759414d4",
+        "enforcementHash": "2893ced7f21970c257e618618f41324f",
+        "timestamp": "2026-04-29T02:14:22.183Z",
+        "url": "https://client-api.arkoselabs.com/v2/2CB16598-CB82-4CF7-B332-5990DB66F3AB/api.js"
+      },
       {
         "version": "4.0.16",
         "buildId": "4ac8440d-c69b-4930-aa81-b805f45bb5d6",
@@ -246,8 +260,8 @@
         "url": "https://client-api.arkoselabs.com/v2/2CB16598-CB82-4CF7-B332-5990DB66F3AB/api.js"
       }
     ],
-    "latestBuildId": "4ac8440d-c69b-4930-aa81-b805f45bb5d6",
-    "latestEnforcementHash": "d9d8ed97fd0f45a56f664628052bea47"
+    "latestBuildId": "6ba988b9-6187-4fcb-9c3d-c8bb759414d4",
+    "latestEnforcementHash": "2893ced7f21970c257e618618f41324f"
   },
   "roblox_join": {
     "latest": "4.0.17",
