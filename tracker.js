@@ -18,6 +18,22 @@ const SERVICES = {
 const VERSIONS_FILE = path.join(__dirname, "versions.json");
 const DATA_DIR = path.join(__dirname, "data");
 
+function extractBuildId(content) {
+    const patterns = [
+        /GAME_LIMIT_DEFAULT["'`],\s*\w+\s*=\s*["'`]([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})["'`]/i,
+        /(?:BUILD_ID|buildId|build_id|gameId|sdkId|scriptId)["'`]?:?\s*["'`]([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})["'`]/i,
+        /(?:cdn|v2)\/([0-9a-fA-F]{32})\/(?:api|api\.js|api\.min\.js)/i,
+        /["'`]([0-9a-fA-F]{32})["'`]\s*,\s*\w+\s*=\s*["'`]script["'`]\s*,\s*\w+\s*=\s*["'`]v2\/api\.js["'`]/i
+    ];
+
+    for (const pattern of patterns) {
+        const match = content.match(pattern);
+        if (match) return match[1];
+    }
+
+    return "unknown";
+}
+
 async function fetchApi(url) {
     return new Promise((resolve, reject) => {
         https.get(url, {
@@ -40,9 +56,8 @@ async function processService(name, url, versionsData) {
     try {
         const content = await fetchApi(url);
         const versionMatch = content.match(/\/api\.js["'`],\s*\w+\s*=\s*["'`](\d+\.\d+\.\d+)["'`]/);
-        const buildIdMatch = content.match(/GAME_LIMIT_DEFAULT["'`],\s*\w+\s*=\s*["'`]([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})["'`]/i);
-        // Enforcement hash is the 32-char hex value assigned before "script" and "v2/api.js"
-        const enforcementMatch = content.match(/["'`]([0-9a-f]{32})["'`],\s*\w+\s*=\s*["'`]script["'`],\s*\w+\s*=\s*["'`]v2\/api\.js["'`]/i);
+        const buildId = extractBuildId(content);
+        const enforcementMatch = content.match(/["'`]([0-9a-fA-F]{32})["'`]\s*,\s*\w+\s*=\s*["'`]script["'`]\s*,\s*\w+\s*=\s*["'`]v2\/api\.js["'`]/i);
 
         if (!versionMatch) {
             console.error(`❌ Version not found for ${name}`);
@@ -50,7 +65,6 @@ async function processService(name, url, versionsData) {
         }
 
         const version = versionMatch[1];
-        const buildId = buildIdMatch ? buildIdMatch[1] : "unknown";
         const enforcementHash = enforcementMatch ? enforcementMatch[1] : "unknown";
 
         if (!versionsData[name]) {
@@ -78,14 +92,13 @@ async function processService(name, url, versionsData) {
             url
         });
 
-        // Save file
         const serviceDir = path.join(DATA_DIR, name);
         if (!fs.existsSync(serviceDir)) fs.mkdirSync(serviceDir, { recursive: true });
-        
+
         const filename = `api_${version.replace(/\./g, "_")}.js`;
         fs.writeFileSync(path.join(serviceDir, filename), content);
         fs.writeFileSync(path.join(serviceDir, "latest.js"), content);
-        
+
     } catch (error) {
         console.error(`❌ Error processing ${name}: ${error.message}`);
     }
@@ -103,7 +116,6 @@ async function run() {
 
     fs.writeFileSync(VERSIONS_FILE, JSON.stringify(versionsData, null, 2));
 
-    // Generate README table
     const readmePath = path.join(__dirname, "README.md");
     let table = "| Service | Version | Build ID | Enforcement Hash |\n| --- | --- | --- | --- |\n";
     for (const [name, data] of Object.entries(versionsData)) {
